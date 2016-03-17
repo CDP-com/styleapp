@@ -1,4 +1,4 @@
-App-Template
+The Style App
 
 
 ===========
