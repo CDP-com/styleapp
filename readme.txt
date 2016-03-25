@@ -27,5 +27,6 @@ Changelog
 
 ----
 
+03/25/2016, smadara, Added additional "More/Less with Continuity" section, Made app compliant with appTemplate
 
 03/17/2016, smadara, initial commit of the app

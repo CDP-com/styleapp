@@ -30,18 +30,6 @@
 
 
 <!-- ************************************************ -->
-<!--        START: App Title - Edit This Section      -->
-<!-- ************************************************ -->
-<title>The Style App | SnapBack Apps</title>
-<!-- ************************************************ -->
-<!--                  END: App Title                  -->
-<!-- ************************************************ -->
-
-
-
-
-
-<!-- ************************************************ -->
 <!--             START: App Specific Files            -->
 <!--        Add Any of Your Custom Javascript,        --> 
 <!--   Custom CSS, and Other App Specific Files Here  -->
@@ -57,15 +45,32 @@
 
 
 <!-- ************************************************ -->
+<!--        START: App Title - DO NOT EDIT THIS SECTION      -->
+<!-- ************************************************ -->
+<script type="text/javascript">
+document.title = apptitle + " | SnapBack Apps";
+</script>
+<!-- ************************************************ -->
+<!--                  END: App Title                  -->
+<!-- ************************************************ -->
+
+
+
+
+
+<!-- ************************************************ -->
 <!--START: Required Scripts - DO NOT EDIT THIS SECTION-->
 <!-- ************************************************ -->
 <script type="text/javascript">
-
+	// Include package JS file after deployment
+	CreateAppJSFile();
+</script>
+<script type="text/javascript">
+	// Temporary Solution to Setting the Initial Permissions
 	var ManifestURL_Local = "%ALLUSERSPROFILE%\\cdp\\snapback\\apps\\apptemplate\\apptemplate.xml";
 	// Check to see if User is admin 
-
 	
-// globals
+	// globals
 	var EnableButtonLMD=0;
 	var EnableButtonCurrent=0;
     var curEnableButton=0;
@@ -84,7 +89,6 @@
 	var oTest = new ActiveXObject("wscript.shell");
 	DName = oTest.ExpandEnvironmentStrings("%COMPUTERNAME%") 
 	UName = oTest.ExpandEnvironmentStrings("%USERNAME%") 
-
 	var regBool=false;
 	var regNum=0;
 	var regString=null;
@@ -102,16 +106,15 @@
 			{
 				// runService to initialize registry for app 
 				// comment out for development and load your initial perms via a .reg file
-				//runService(ManifestURL_Local,"","perms");
+				// comment out if you have no buttons
+				// runService(ManifestURL_Local,"","perms");
 			}
 			else
 			{
 				// read in data
 				//loop through number of buttons set by author
-
 	            for (i=0; i<btncount; i++)
 				{
-
 				try {
 					// this is to test to see if any enable button changes has been made 
 					EnableButtonLMD = GetButtonIniValue(appname, i, "EnableButtonLastModifiedDate");
@@ -139,7 +142,6 @@
 					currentUser= GetButtonIniValue(appname,i,"CurrentAllowUser");
 					curUserbtn="btn"+i+"_CurrentAllowUser";
 					CurUserbtn=eval(currentUser);
-
 				}
 				try {
 					// Check if admin modified caution flag for this button
@@ -156,121 +158,8 @@
 				} 
 	} // end loop through buttons
 			}
-
 	//DONT need to read in registry values as we get them when we need them
-
 </script>
-<script type="text/javascript">
-	var menuarray = new Array();
-	var scrolled = false;
-</script>
-<script type="text/javascript">	  
-      function getRelativeURL()
-      {
-         var relURL = "";
-         var strhref = document.location.href;
-         var array_url = strhref.split('/');
-         var arraylength = array_url.length;
-         if (arraylength > 2)
-         {
-            relURL = "../" + array_url[arraylength - 2] + "/" + array_url[arraylength - 1];
-         }
-         else
-         {
-            relURL = document.location.href;
-         }
-         
-         if (relURL.indexOf("#") > -1)
-         {
-            relURL = relURL.substring(0, relURL.indexOf("#"));
-         }
-         
-         if (relURL.indexOf("?") > -1)
-         {
-            relURL = relURL.substring(0, relURL.indexOf("?"));
-         }
-
-         return relURL;
-      }
-		     
-		var treemenu01;
-
-		function loadTree(divid,treeName,nodeURL,jv){		
-			var str="";
-			var tmptree;
-		// divid == tree[treeName] == var name for the treemenu
-		// jsonVar == eval(treeName);
-		// nodeURL = string node url, this is the node that the tree will be opened to and focused on
-			tmptree = new cdpTree(divid,treeName,nodeURL);
-			tmptree.readScript(jv).renderTree();
-
-			tmptree.setKeyEvent(divid);
-			treemenu01=tmptree;
-			menuarray[divid]= tmptree;
-		}
-      
-      function pageScroll() {
-         if ( !scrolled )
-         {
-            scrolled = true;
-            window.scrollTo(0,top);
-            scrolldelay = setTimeout('pageScroll()', 200);
-         }
-      }
-
-      window.onload = function(){
-         var treemenuobj = document.getElementById('treemenu01');
-         if (treemenuobj)
-         {
-            if (document.getElementById('treemenu01').visible)
-               document.getElementById('treemenu01').focus();
-         }
-		 
-		
-		try {
-		GetCurrentUserLastLModifiedDate()	
-		}
-		catch (err) {
-		var Tripped = "<table cellpadding=2 cellspacing=2 width=%50><tr><td colspan=2><h3>Global Settings Buttons Not Enabled - Talk to Your Administrator</h3></td></tr><tr><td width=50%><input type='checkbox' name='radiobtn' disabled='disabled' onclick='ChangeSetGlobal();'>Global Set Current</td><td width=50%><input type='checkbox' name='radiobtn' disabled='disabled' checked='checked' onclick='ChangeGlobalInDefault();'>Global Set Default</td></tr></table>"
-		}	
-      }
-
-</script>
-
-<script>
-	//Initialize jQuery UI Elements and Other UI Features
-	//The "Collapse Outline" Element
-    $(document).ready(function() {
-        $('.menu-link').bigSlide();
-		//if (Admin == "No") {
-		    //$(".acc-section").hide();
-		//}
-    });
-	
-	//The "View More" Element
-	$(document).ready(function(){
-		$('.viewmore').showHide();
-	});
-
-	//The "Accordion" Element
-	//<![CDATA[
-	$(function(){
-		jQuery('.accordion').accordion({ collapsible:true, heightStyle:"content", active:false, autoHeight:true, disabled:true});
-		jQuery('.accordion h3.ui-accordion-header').click(function(){
-			jQuery(this).next().slideToggle();
-		});
-		jQuery('.accordion-expand-all').click(function(){
-			jQuery('.accordion h3.ui-accordion-header').next().slideDown();
-		});
-	});
-	//]]>
-
-	//The "Tabs" Element
-	$(function() {
-		$( "#content-tabs" ).tabs();
-	  }); 	
-</script>
-
 <script type="text/javascript" src="../common/scripts/onlinecheck.js"></script>
 <!-- ************************************************ -->
 <!--               END: Required Scripts              -->
@@ -286,14 +175,14 @@
 <!--  START: Left Sidebar - DO NOT EDIT THIS SECTION  -->
 <!-- ************************************************ -->
 
-<script type="text/javascript" src="../common/template/sidebar1.js"></script>
+<script type="text/javascript">CreateSidebar1();</script>
 
 	<script type="text/javascript">
 		var nodeURL = getRelativeURL();
 			loadTree('treemenu01', 'menu01', nodeURL, menu01);
 	</script>
 
-<script type="text/javascript" src="../common/template/sidebar2.js"></script>
+<script type="text/javascript">CreateSidebar2();</script>
 
 <!-- ************************************************ -->
 <!--                 END: Left Sidebar                -->
@@ -304,37 +193,49 @@
 
 
 <!-- ************************************************ -->
-<!--      START: Page Content - Edit this Section     -->
+<!-- START: Page Content 1 - DO NOT EDIT THIS SECTION -->
 <!-- ************************************************ -->
-<div id="app-intro">
-	<div class="app-name">
-		The Style App
-	</div><!--End #app-name-->
-	
-	<div class="producer-credits">
-		<img src="../common/media/default-group-icon.png" alt="The Style Committee"/>
-		<a id="connect" href="http://factory.snapback-apps.com/app/the-style-app/" title="Connect with the Developers of this App"><!--Include a Link to your App's Connect Page-->
-		Produced by the Style Committee<br />
-		Suggest / Contribute / Get Help
-		</a>
-	</div><!--End #producer-credits-->
-</div><!--End #app-intro-->
+<script type="text/javascript">CreatePageContent1();</script>
+<!-- ************************************************ -->
+<!--               END: Page Content 1                -->
+<!-- ************************************************ -->
 
-<div id="tab-container">
-	<div id="tabnav">
-		<ul class="tabs">
-			<li><a href="#tab1" title="Run this App from Here">App Home</a></li>
-			<li><a href="#tab2" title="The technical details of what this App does">How it Works</a></li>
-			<li><a href="#tab3" title="This App is free to Use">Pricing</a></li>
-			<li><a href="#tab4" title="Record of Each Committee's work and report to users">What's Certified</a></li>
-			<li><a href="#tab5" title="Permissions for this App">Permissions</a></li>
-		</ul>
-		<span></span>
-	</div><!--End #tabs-->
-</div><!--End #tab-container -->
 
-<div id="content-container">
-      				
+
+
+
+<!-- ************************************************ -->
+<!--     START: Page Tabs - Add More If Necessary     -->
+<!-- ************************************************ -->
+	<ul class="tabs">
+		<li><a href="#tab1" title="Run this App from Here">App Home</a></li>
+		<li><a href="#tab2" title="The technical details of what this App does">How it Works</a></li>
+		<li><a href="#tab3" title="This App is free to Use">Pricing</a></li>
+		<li><a href="#tab4" title="Record of Each Committee's work and report to users">What's Certified</a></li>
+	</ul>
+<!-- ************************************************ -->
+<!--                 END: Page Tabs                   -->
+<!-- ************************************************ -->
+
+
+
+
+
+<!-- ************************************************ -->
+<!-- START: Page Content 2 - DO NOT EDIT THIS SECTION -->
+<!-- ************************************************ -->
+<script type="text/javascript">CreatePageContent2();</script>
+<!-- ************************************************ -->
+<!--               END: Page Content 2                -->
+<!-- ************************************************ -->
+
+
+
+
+
+<!-- ************************************************ -->
+<!--   START: Page Tab Content - Edit this Section    -->
+<!-- ************************************************ -->    				
 	<div id="tab1">
 		
 		<p>The purpose of this app is the demonstrate the different methods an app developer can use to organize and display their app's UI content.</p>
@@ -348,7 +249,7 @@
 						
 		<p>Below is a running list of elements you can use to style the content of your app.  Many of the below elements use standard jQuery UI dependencies which are included as common files within the SnapBack Apps Platform.  To use these elements, simply view the source code and follow the established patterns.</p>
 		
-		<strong>View More/View Less</strong>
+		<strong>View More/View Less for Entire Sections</strong>
 		<p>Below are some examples of the "View More/View Less" feature which allows you hide select content on page load.  It additionally gives the user a chance to hide information they don't find relevant or which otherwise may be unnecessary upon a cursory glance.  <a class="viewmore" href="#" rel="#viewmore_more_less_section">View More</a></p>
 		
 		<div id="viewmore_more_less_section" class="viewmorediv" style="display: none;">
@@ -368,6 +269,31 @@
 				</ul>
 			</div>
 		</div><!--End #viewmore_more_less_section-->
+		
+		<hr />
+		
+		<strong>More/Less with Continuity</strong>
+		<p>Below are some examples of the "More/Less" feature which, by default, limits a given section to 250 characters.  Anything more than that will show a "more" link which will continue the passage with exisiting continuity. <a class="viewmore" href="#" rel="#viewmore_continuity_section">View More</a></p>
+		
+		<div id="viewmore_continuity_section" class="viewmorediv" style="display: none;">
+			<div class='more'>
+				This is a line in which additional information exceeds the 250 limit.  Anything over that character limit is hidden upon page load.  However, as you can see, the rest of the "div" element can be expanded simply by clicking the "more" link.  This helps organize content in which a specific section may not be necessary or pertinent to most users and yet which may be particularly relevant to a subset of users.  It is also different in that the "more/less" links are inline with the section which is hidden.
+			</div>
+			<p>&nbsp;</p>
+			<div class='more'>
+				This is a line in which additional information is exceeds the 250 limit and which also contains other HTML elements such as a list or additional paragraphs.  For example, if you expand this section, you will see an unorganized list as well as additional paragraphs.
+				<br /><br />
+				<ul>
+					<li>You can include unorganized lists</li>
+					<li>Lorem ipsum dolor sit amet</li>
+					<li>Consectetur adipisicing elit</li>
+					<li>Sed do eiusmod tempor incididunt</li>
+					<li>Ut labore et dolore magna</li>
+					<li>Proin viverra leo ut odio</li>
+				</ul>
+				You can also include additional paragraphs with more content.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 			
+			</div>
+		</div><!--End #viewmore_continuity_section-->
 		
 		<hr />
 
@@ -432,7 +358,6 @@
 	</div><!--End Tab1-->
 	
 	<div id="tab2">
-
 		<!-- ************************************************************************ -->
 		<!--           Below is the standard technical details instructions           -->
 		<!-- Remove and include your app's individual technical details in plain HTML -->
@@ -445,42 +370,33 @@
 	</div><!--End Tab2-->
 	
 	<div id="tab3">
-		
+		  
 		<!-- ********************************************************************************* -->
 		<!--                    Below is the standard app pricing information                  -->
 		<!-- Remove and include your app's individual pricing details in platin HTML if needed -->
 		<!-- ********************************************************************************* -->
-		<script type="text/javascript" src="../common/template/standardpricing.js"></script>
-
+		<script type="text/javascript">CreateStandardPricing();</script>
+		
+		
+		
 	</div><!--End Tab3-->
 						
 	<div id="tab4">
-
+			
 		<!-- ******************************************************************** -->
 		<!--            Below is the standard certification information           -->
 		<!--            Do not remove or otherwise modify this section            -->
 		<!-- ******************************************************************** -->
-		<script type="text/javascript" src="../common/template/standardcertification.js"></script>
-				
+		<script type="text/javascript">CreateStandardCertification();</script>
+		
+		
+		
 	</div><!--End Tab4-->
-	
-	<div id="tab5">
-
-		<div class="accordion">
-				<h3>Administrator Button Permission Settings</h3>
-				<p>There are no buttons and, consequently, no permissions to set with this app.</p>
-		</div>
-	
-	</div><!--End Tab5-->
-	
-
-
-
-
-</div><!--End content-container-->    		
 <!-- ************************************************ -->
-<!--                 END: Page Content                -->
-<!-- ************************************************ -->
+<!--              End: Page Tab Content               -->
+<!-- ************************************************ -->   	
+
+
 
 
 
@@ -489,7 +405,7 @@
 <!-- ************************************************ -->
 <!--      START: Footer - DO NOT EDIT THIS SECTION    -->
 <!-- ************************************************ -->
-<script type="text/javascript" src="../common/template/footer.js"></script>
+<script type="text/javascript">CreateFooter();</script>
 <!-- ************************************************ -->
 <!--                    END: Footer                   -->
 <!-- ************************************************ -->
@@ -500,11 +416,10 @@
 
 <!-- ************************************************ -->
 <!-- START: Required Web Page Logic close of body tag -->
-<!-- DO NOT EDIT THIS SECTION EXCEPT FOR WHERE NOTED  -->
+<!--             DO NOT EDIT THIS SECTION             -->
 <!-- ************************************************ -->
 <script type="text/javascript">
-   // DEVELOPER NOTE: Set number of CDP buttons for page
-   var nCDPButtons = 0;  //Number of buttons for page.
+   var nCDPButtons = btncount;  // Number of buttons for page set by applib.js.
    // Global array of button objects inheriting from CDPButton class
    var oButtonsArray = [];
    oButtonsArray.length = nCDPButtons;  //Number of buttons for page. Array elements start with zero, so 3 buttons have elements 0 - 2.
@@ -513,8 +428,7 @@
 <script type="text/javascript">
    <!--
    // Globals used by ../common/webpagelogic.js
-   // DEVELOPER NOTE: Developer needs to set the next value
-   var PackageName = "styleapp";
+   var PackageName = appname;  // Package name set by applib.js
 
 	// DEVELOPER NOTE: Next value can be set, but is optional
    var DemoPageName = "";	// Leave this blank or use an independent html file.
